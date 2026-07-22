@@ -2,8 +2,8 @@
 const boton = document.getElementById("Dcv");
 boton?.addEventListener("click", () => {
     const enlace = document.createElement("a");
-    enlace.href = "/cv/Desarrollador_Web_CV_Javier_Diaz_Rayo.pdf";
-    enlace.download = "Desarrollador_Web_CV_Javier_Diaz_Rayo.pdf";
+    enlace.href = "cv/Desarrollador_Web_CV_Javier_Diaz_Rayo.pdf";
+    enlace.download = "CV_Javier_Diaz_Rayo.pdf";
     enlace.click();
 });
 
