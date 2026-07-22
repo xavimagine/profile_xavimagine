@@ -1,0 +1,137 @@
+---
+const nombre = "Javier Díaz Rayo";
+const textoInt = "Desarrollador front-end especializado en la creación de interfaces dinámicas, con una sólida experiencia en la integración de arquitecturas y servicios back-end.";
+const btnTxt = "Descargar Cv";
+---
+
+<div class="intro">
+    <h1>{nombre}</h1>
+    <article>
+        <div class="texto-wrapper">
+            <p id="texto-efecto" data-texto={textoInt}></p>
+        </div>
+
+        <button type="button" id="Dcv" style="cursor: pointer;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download-icon lucide-download">
+                <path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/>
+            </svg>
+            <span>{btnTxt}</span>
+        </button>
+    </article>
+</div>
+
+<style>
+    .intro {
+        max-width: 1000px; 
+        margin: 0 auto; 
+        padding: 5rem 1rem 10rem;
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+    }
+    article {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+    h1 {
+        color: #F4F2EC;
+    }
+
+    .texto-wrapper {
+        flex: 1;
+        min-height: 72px; 
+        display: flex;
+        align-items: center;
+    }
+
+    p {
+        color: #9BA1A8;
+        font-size: 15px;
+        margin: 0;
+        font-family: 'Space Mono', monospace;
+        font-style: italic;
+        font-weight: 400;
+    }
+  :global(.cursor) {
+    display: inline; 
+    border-right: 2px solid #22C55E; 
+    margin-left: 2px;
+    animation: parpadeo 0.8s infinite;
+}
+
+
+    @keyframes parpadeo {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+
+    /* Estilos del botón */
+    button {
+        font-size: 1.2rem;
+        font-family: 'Squada One', sans-serif;
+        background-color: #22C55E;
+        color: white;
+        border: none;
+        border-radius: 29px;
+        width: 311px;
+        height: 48px;
+        flex-shrink: 0; 
+        display: flex;
+        justify-content: center; 
+        align-items: center;    
+        gap: 8px;
+        transition: background-color 0.4s ease, color 0.4s ease;
+
+        svg {
+            transition: stroke 0.4s ease;
+        }
+
+        span {
+            color: white;
+            transition: color 0.4s ease;
+        }
+
+        &:hover {
+            background-color: #F4F2EC;
+            
+            svg {
+                stroke: #22C55E;
+            }
+            span {
+                color: #22C55E;
+            }
+        }
+    }
+
+    /* MEDIA PHONE */
+    @media (min-width: 320px) and (max-width: 767px) {
+        article {
+            flex-direction: column;
+            align-items: center;
+        }
+        .texto-wrapper {
+            min-height: 120px; 
+            width: 100%;
+        }
+        button {
+            width: 250px;
+        }
+        p {
+            text-align: center;
+            width: 100%;
+        }
+    }
+
+    /* MEDIA TABLET */
+    @media (min-width: 768px) and (max-width: 1024px) {
+        .texto-wrapper {
+            min-height: 90px;
+        }
+        button {
+            width: 250px;
+        }
+    }
+</style>
+
+<script src="./intro.js"></script>

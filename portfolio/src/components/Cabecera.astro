@@ -1,26 +1,52 @@
 ---
 import LogoSVG from '../assets/logo.svg';
-
+const navItems = [
+  {
+    label: 'Sobre mí',
+    href: '/#sobre-mi',
+    iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`
+  },
+  {
+    label: 'Habilidades',
+    href: '/#habilidades',
+    iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>`
+  },
+  {
+    label: 'Proyectos',
+    href: '/#proyectos',
+iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2Z"/><path d="m9.5 10.5-2 2 2 2"/><path d="m14.5 10.5 2 2-2 2"/></svg>`  },
+  {
+    label: 'Experiencia & Formación',
+    href: '/#exp',
+    iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.74Z"/><path d="m9 12 2 2 4-4"/></svg>`
+  },
+  {
+    label: 'Contacto',
+    href: '/#contacto',
+    iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 1-1.732"/><path d="m22 5.5-6.419 4.179a2 2 0 0 1-2.162 0L7 5.5"/><rect x="7" y="3" width="15" height="12" rx="2"/></svg>`
+  }
+];
 ---
 
 <header class="header">
  <LogoSVG id="logo"/>
-
+<!-- Menú Pc -->
   <nav class="nav">
-    <a href="/#sobre-mi">Sobre mí</a>
-    <a href="/#habilidades">Habilidades</a>
-    <a href="/#proyectos">Proyectos</a>
-    <a href="/#exp">Experiencia & Formación</a>
-    <a href="/#contacto">Contacto</a>
+      {navItems.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))}
   </nav>
 </header>
-  <nav class="nav" id="navphone">
-    <a href="/#sobre-mi"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F4F2EC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
-    <a href="/#habilidades"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F4F2EC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-xml-icon lucide-code-xml"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></a>
-    <a href="/#proyectos"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-code"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><path d="m10 10-2 2 2 2"/><path d="m14 10 2 2-2 2"/></svg></a>
-    <a href="/#exp"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.74Z"/><path d="m9 12 2 2 4-4"/></svg></a>
-    <a href="/#contacto"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F4F2EC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mails-icon lucide-mails"><path d="M17 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 1-1.732"/><path d="m22 5.5-6.419 4.179a2 2 0 0 1-2.162 0L7 5.5"/><rect x="7" y="3" width="15" height="12" rx="2"/></svg></a>
-  </nav>
+
+<!-- Menú Móvil/tablet -->
+<nav class="nav" id="navphone">
+  {navItems.map((item) => (
+    <a href={item.href} set:html={item.iconRaw} />
+  ))}
+</nav>
+
+
+
 <style>
   .header {
     display: flex;
@@ -28,11 +54,13 @@ import LogoSVG from '../assets/logo.svg';
     flex-direction: column;
     padding: 1.4rem 0rem 2rem 0rem;
     background-color: #242421;
+    
+    #logo  {
+      width: 200px;
+    }
   }
 
-  #logo  {
-    width: 200px;
-  }
+
 
   .nav{
     margin-top: 20px;
@@ -44,29 +72,52 @@ import LogoSVG from '../assets/logo.svg';
     font-family: Inter;
     font-size: 0.9rem;
   }
+
+  .nav a:hover {
+    color: #00ff66;
+  }
+
   #navphone{
+    display: none;
+    width: 90%;
     background-color: #242421;
-    width: 334px;
+    max-width: 334px;
     height: 55px;
-    display: flex;
     align-items: center;
     justify-content: space-around; 
     border-radius: 39px;
     margin: 20px auto 0 auto;
     position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
+
+    a {
+      margin-left: 0;
+      display: flex;
+
+      &:hover svg {
+        stroke: #00ff66;
+      }
+    }
   }
-  #navphone a:hover svg {
-    stroke: #00ff66;
-  }
-  #navphone a {
-    margin-left: 0;
-    display: flex;
-  }
-  .nav a:hover {
-    color: #00ff66;
+
+  @media (max-width: 1024px) {
+    .nav{
+      display: none;
+    }
+    #navphone {
+      display: flex;
+
+      a svg {
+        color: #cccccc;
+      }
+      a:hover svg{
+        color: #00ff66;
+        transform: scale(0.95);
+      }
+    }
+
   }
 </style>

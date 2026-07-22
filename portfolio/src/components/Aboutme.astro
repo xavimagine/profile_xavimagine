@@ -1,0 +1,93 @@
+---
+const titulo ="Sobre mí";
+const textAbout = " Mi trayectoria en el mundo de la tecnología se nutre de una combinación de lógica y creatividad. Gracias a mi formación tanto en diseño gráfico como en desarrollo full-stack (DAM y DAW), consigo tender un puente entre imágenes impresionantes y un código sólido.Para mí, el desarrollo no consiste solo en hacer que las cosas funcionen, sino en hacerlas memorables. Me apasiona crear interfaces de usuario muy interactivas y llamativas que no solo sean bonitas, sino que también hagan que la experiencia del usuario sea fluida e intuitiva. Me encanta resolver rompecabezas complejos de backend tanto como disfruto con los diseños de frontend con precisión al píxel, asegurándome de que cada aplicación que desarrollo sea potente, escalable y un placer de usar"
+import desktopImg from '../assets/Fperfil/Pdesktop.png';
+import tabletImg from '../assets/Fperfil/Ptablet.png';
+import phoneImg from '../assets/Fperfil/Pphone.png';
+
+const fotoPerfil =
+    {
+    alt: 'Foto de perfil del portfolio llamado javier diaz rayo',
+    src: { 
+        pc:desktopImg.src,
+        tablet:tabletImg.src,
+        phone:phoneImg.src
+    }
+  }
+
+---
+<section class="about-section">
+<div class="about">
+    <header>
+        <span>01/</span>
+        <h1>{titulo}</h1>
+    </header>
+    <img src={fotoPerfil.src.pc} alt={fotoPerfil.alt} col-span />
+    <p>{textAbout}</p>
+  
+</div>
+</section>
+
+
+<style>
+    section{
+        background-color: #242421;
+        width: 100%;
+        padding: 4rem 2rem;
+        display: flex;
+        justify-content: center;
+        box-sizing: border-box;
+
+    .about{
+        max-width: 1000px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+        grid-template-rows: repeat(4, 1fr);
+        grid-template-areas:
+            "header header img"
+            "p  p img"
+            "p  p img"
+            "p  p img"
+    }
+        header{
+        display: flex;
+        align-self: start;
+        grid-area: header;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: baseline;
+        }
+            align-items: baseline;
+            span{
+                color: #22C55E;
+                font-size: 16px;
+                font-family: inter;
+                margin-right: 8px;
+                line-height: 1; 
+                margin-top: 4px;
+            }
+              h1{
+                color: #F4F2EC;
+                margin: 0; 
+                line-height: 1; 
+                font-size: 2.25rem;
+            } 
+            p{
+                color: #9C9A93;
+                grid-area: p;
+                margin: 16px;
+                font-size: 14px;
+                font-family: 'Space Mono', monospace;
+                font-weight: 700;
+            }
+            img{
+                width: 249px;
+                height: 409px;
+                border-radius: 20px;
+                margin-left: 66px;
+                grid-area: img;
+            }
+        }
+}
+</style>
