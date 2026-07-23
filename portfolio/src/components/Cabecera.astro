@@ -3,26 +3,26 @@ import LogoSVG from '../assets/logo.svg';
 const navItems = [
   {
     label: 'Sobre mí',
-    href: '/#sobre-mi',
+    href: '#sobre-mi',
     iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`
   },
   {
     label: 'Habilidades',
-    href: '/#habilidades',
+    href: '#habilidades',
     iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>`
   },
   {
     label: 'Proyectos',
-    href: '/#proyectos',
+    href: '#proyectos',
 iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2Z"/><path d="m9.5 10.5-2 2 2 2"/><path d="m14.5 10.5 2 2-2 2"/></svg>`  },
   {
     label: 'Experiencia & Formación',
-    href: '/#exp',
+    href: '#exp',
     iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.74Z"/><path d="m9 12 2 2 4-4"/></svg>`
   },
   {
     label: 'Contacto',
-    href: '/#contacto',
+    href: '#contacto',
     iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 1-1.732"/><path d="m22 5.5-6.419 4.179a2 2 0 0 1-2.162 0L7 5.5"/><rect x="7" y="3" width="15" height="12" rx="2"/></svg>`
   }
 ];
@@ -39,7 +39,7 @@ iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox
 </header>
 
 <!-- Menú Móvil/tablet -->
-<nav class="nav" id="navphone">
+<nav  id="navphone">
   {navItems.map((item) => (
     <a href={item.href} set:html={item.iconRaw} />
   ))}
@@ -53,8 +53,13 @@ iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox
     align-items: center;
     flex-direction: column;
     padding: 1.4rem 0rem 2rem 0rem;
-    background-color: #242421;
-    
+    background-color: rgba(36, 36, 33, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+
     #logo  {
       width: 200px;
     }
@@ -76,16 +81,27 @@ iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox
   .nav a:hover {
     color: #00ff66;
   }
-
+    @keyframes temporalGreenSvg {
+    0%, 85% {
+      stroke: #00ff66; /* Verde durante 8.5 segundos */
+    }
+    100% {
+      stroke: #cccccc; /* Transición de vuelta al color original a los 10s */
+    }
+  }
+  
   #navphone{
     display: none;
     width: 90%;
-    background-color: #242421;
+    background-color: rgba(36, 36, 33, 0.471);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); 
     max-width: 334px;
     height: 55px;
     align-items: center;
     justify-content: space-around; 
     border-radius: 39px;
+    
     margin: 20px auto 0 auto;
     position: fixed;
     bottom: 20px;
@@ -97,8 +113,11 @@ iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox
       margin-left: 0;
       display: flex;
 
-      &:hover svg {
-        stroke: #00ff66;
+      svg{
+        stroke: #cccccc;
+      }
+      svg.temporal-green {
+        animation: temporalGreenSvg 2s ease forwards;
       }
     }
   }
@@ -110,14 +129,37 @@ iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox
     #navphone {
       display: flex;
 
-      a svg {
-        color: #cccccc;
-      }
-      a:hover svg{
-        color: #00ff66;
-        transform: scale(0.95);
-      }
     }
 
   }
 </style>
+
+<script>
+document.querySelectorAll('nav a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const targetAnchor = (e.target as HTMLElement).closest('a');
+      const targetId = targetAnchor?.getAttribute('href');
+
+      if (targetId && targetId.startsWith('#')) {
+        e.preventDefault();
+        const targetElement = document.querySelector(targetId);
+
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }
+    });
+  });
+
+  document.querySelectorAll('#navphone a svg').forEach(target => {
+  target.addEventListener('click', function() {
+    target.classList.remove('temporal-green');
+     void target.getBoundingClientRect();
+    target.classList.add('temporal-green');
+  });
+});
+
+</script>

@@ -5,133 +5,224 @@ const btnTxt = "Descargar Cv";
 ---
 
 <div class="intro">
-    <h1>{nombre}</h1>
-    <article>
-        <div class="texto-wrapper">
-            <p id="texto-efecto" data-texto={textoInt}></p>
-        </div>
+  <h1>{nombre}</h1>
+  <article>
+    <div class="texto-wrapper">
+      <p id="texto-efecto" data-texto={textoInt}></p>
+    </div>
 
-        <button type="button" id="Dcv" style="cursor: pointer;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download-icon lucide-download">
-                <path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/>
-            </svg>
-            <span>{btnTxt}</span>
-        </button>
-    </article>
+    <button type="button" id="Dcv" style="cursor: pointer;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download-icon lucide-download">
+        <path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/>
+      </svg>
+      <span>{btnTxt}</span>
+    </button>
+  </article>
 </div>
 
 <style>
-    .intro {
-        max-width: 1000px; 
-        margin: 0 auto; 
-        padding: 5rem 1rem 10rem;
-        display: flex;
-        flex-direction: column;
-        width: 80%;
-    }
-    article {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-    }
-    h1 {
-        color: #F4F2EC;
-    }
 
-    .texto-wrapper {
-        flex: 1;
-        min-height: 72px; 
-        display: flex;
-        align-items: center;
-    }
+  .intro {
+    max-width: 1000px; 
+    margin: 0 auto; 
+    padding: 3rem 1.5rem 6rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
-    p {
-        color: #9BA1A8;
-        font-size: 15px;
-        margin: 0;
-        font-family: 'Space Mono', monospace;
-        font-style: italic;
-        font-weight: 400;
-    }
+  h1 {
+    color: #F4F2EC;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  article {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .texto-wrapper {
+    width: 100%;
+    min-height: 110px; 
+    display: flex;
+    align-items: center;
+  }
+
+  p {
+    color: #9BA1A8;
+    font-size: 12px;
+    margin: 0;
+    font-family: 'Space Mono', monospace;
+    font-style: italic;
+    font-weight: 400;
+    text-align: center;
+    width: 100%;
+    line-height: 1.6;
+  }
+
   :global(.cursor) {
     display: inline; 
     border-right: 2px solid #22C55E; 
     margin-left: 2px;
     animation: parpadeo 0.8s infinite;
+  }
+
+  @keyframes parpadeo {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* Estilos del botón */
+  button {
+    font-size: 1.2rem;
+    font-family: 'Squada One', sans-serif;
+    background-color: #22C55E;
+    color: white;
+    border: none;
+    border-radius: 29px;
+    width: 100%;
+    max-width: 280px; 
+    height: 48px;
+    flex-shrink: 0; 
+    display: flex;
+    justify-content: center; 
+    align-items: center;    
+    gap: 8px;
+    transition: background-color 0.4s ease, color 0.4s ease;
+
+    svg {
+      transition: stroke 0.4s ease;
+    }
+
+    span {
+      color: white;
+      transition: color 0.4s ease;
+    }
+
+    svg {
+      transition: stroke 0.4s ease;
+    }
+    span {
+      transition: color 0.4s ease;
+    }
+    
+  }
+
+
+
+
+  /* Tablets */
+  @media (min-width: 768px) {
+    .intro {
+      padding: 5rem 2rem 8rem;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      text-align: left;
+    }
+
+    article {
+      flex-direction: row; 
+      gap: 2rem;
+    }
+
+    .texto-wrapper {
+      flex: 1;
+      min-height: 80px;
+    }
+
+    p {
+      font-size: 15px;
+      text-align: left;
+    }
+
+    button {
+      width: 280px;
+    }
+  }
+
+  /* Escritorio */
+  @media (min-width: 1024px) {
+    .intro {
+      width: 80%;
+      padding-bottom: 10rem;
+    }
+
+    .texto-wrapper {
+      min-height: 72px;
+    }
+    p{
+            font-size: 15px;
+    }
+    button {
+      width: 311px; 
+    }
+  }
+  @media (hover: hover) and (pointer: fine) {
+  button:hover {
+    background-color: #F4F2EC;
+  }
+  button:hover svg {
+    stroke: #22C55E;
+  }
+  button:hover span {
+    color: #22C55E;
+  }
 }
 
-
-    @keyframes parpadeo {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0; }
-    }
-
-    /* Estilos del botón */
-    button {
-        font-size: 1.2rem;
-        font-family: 'Squada One', sans-serif;
-        background-color: #22C55E;
-        color: white;
-        border: none;
-        border-radius: 29px;
-        width: 311px;
-        height: 48px;
-        flex-shrink: 0; 
-        display: flex;
-        justify-content: center; 
-        align-items: center;    
-        gap: 8px;
-        transition: background-color 0.4s ease, color 0.4s ease;
-
-        svg {
-            transition: stroke 0.4s ease;
-        }
-
-        span {
-            color: white;
-            transition: color 0.4s ease;
-        }
-
-        &:hover {
-            background-color: #F4F2EC;
-            
-            svg {
-                stroke: #22C55E;
-            }
-            span {
-                color: #22C55E;
-            }
-        }
-    }
-
-    /* MEDIA PHONE */
-    @media (min-width: 320px) and (max-width: 767px) {
-        article {
-            flex-direction: column;
-            align-items: center;
-        }
-        .texto-wrapper {
-            min-height: 120px; 
-            width: 100%;
-        }
-        button {
-            width: 250px;
-        }
-        p {
-            text-align: center;
-            width: 100%;
-        }
-    }
-
-    /* MEDIA TABLET */
-    @media (min-width: 768px) and (max-width: 1024px) {
-        .texto-wrapper {
-            min-height: 90px;
-        }
-        button {
-            width: 250px;
-        }
-    }
+button.active-tap {
+  background-color: #F4F2EC;
+}
+button.active-tap svg {
+  stroke: #22C55E;
+}
+button.active-tap span {
+  color: #22C55E;
+}
 </style>
 
-<script src="./intro.js"></script>
+<script>
+  // Descargar CV
+  const boton = document.getElementById("Dcv");
+  boton?.addEventListener("click", () => {
+    boton.classList.add("active-tap");
+    setTimeout(() => boton.classList.remove("active-tap"), 400);
+
+    const enlace = document.createElement("a");
+    enlace.href = "cv/Desarrollador_Web_CV_Javier_Diaz_Rayo.pdf";
+    enlace.download = "CV_Javier_Diaz_Rayo.pdf";
+    enlace.click();
+  });
+
+  // Efecto Máquina de Escribir
+  const contenedor = document.getElementById("texto-efecto");
+  const textoInt = contenedor?.dataset.texto || "";
+
+  let i = 0;
+  const velocidad = 22;
+
+  if (contenedor && textoInt) {
+    contenedor.textContent = "";
+
+    const cursor = document.createElement("span");
+    cursor.className = "cursor";
+    contenedor.appendChild(cursor);
+
+    function escribir() {
+      if (i < textoInt.length) {
+        cursor.before(textoInt.charAt(i));
+        i++;
+        setTimeout(escribir, velocidad);
+      }
+    }
+    escribir();
+  }
+
+</script>

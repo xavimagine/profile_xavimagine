@@ -16,7 +16,7 @@ const fotoPerfil =
   }
 
 ---
-<section class="about-section">
+<section class="about-section" id="sobre-mi">
 <div class="about">
     <header>
         <span>01/</span>
@@ -30,64 +30,94 @@ const fotoPerfil =
 
 
 <style>
-    section{
-        background-color: #242421;
-        width: 100%;
-        padding: 4rem 2rem;
-        display: flex;
-        justify-content: center;
-        box-sizing: border-box;
+  section {
+    background-color: rgba(36, 36, 33, 0.8);
+    width: 100%;
+    padding: 3rem 2rem;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+  }
 
-    .about{
-        max-width: 1000px;
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); 
-        grid-template-rows: repeat(4, 1fr);
-        grid-template-areas:
-            "header header img"
-            "p  p img"
-            "p  p img"
-            "p  p img"
+  .about {
+    max-width: 1000px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, auto);
+    grid-template-areas:
+      "header"
+      "img"
+      "p";
+    gap: 1.5rem;
+  }
+
+  header {
+    grid-area: header;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: baseline;
+  }
+
+  span {
+    color: #22C55E;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    margin-right: 8px;
+    line-height: 1;
+  }
+
+  h1 {
+    color: #F4F2EC;
+    margin: 0;
+    line-height: 1;
+    font-size: 2.25rem;
+  }
+
+  p {
+    color: #9C9A93;
+    grid-area: p;
+    margin: 12px;
+    font-size: 10px;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    line-height: 1.6;
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    text-justify: inter-character;
+
+  }
+
+  img {
+    grid-area: img;
+    width: 100%;
+    max-width: 194px;
+    height: auto;
+    border-radius: 20px;
+    justify-self: center;
+  }
+
+  /*  ESCRITORIO */
+  @media (min-width: 768px) {
+    .about {
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+        "header img"
+        "p      img";
+      gap: 2rem;
+      p{
+        font-size: 14px;
+      }
     }
-        header{
-        display: flex;
-        align-self: start;
-        grid-area: header;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: baseline;
-        }
-            align-items: baseline;
-            span{
-                color: #22C55E;
-                font-size: 16px;
-                font-family: inter;
-                margin-right: 8px;
-                line-height: 1; 
-                margin-top: 4px;
-            }
-              h1{
-                color: #F4F2EC;
-                margin: 0; 
-                line-height: 1; 
-                font-size: 2.25rem;
-            } 
-            p{
-                color: #9C9A93;
-                grid-area: p;
-                margin: 16px;
-                font-size: 14px;
-                font-family: 'Space Mono', monospace;
-                font-weight: 700;
-            }
-            img{
-                width: 249px;
-                height: 409px;
-                border-radius: 20px;
-                margin-left: 66px;
-                grid-area: img;
-            }
-        }
-}
+    h1{
+        text-align: justify;
+    }
+    img {
+      max-width: 208px;
+      justify-self: end; 
+    }
+  }
 </style>
