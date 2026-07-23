@@ -56,7 +56,8 @@ iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox
     background-color: rgba(36, 36, 33, 0.8);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    position: sticky;
+    position: fixed;
+    width: 100%;
     top: 0;
     z-index: 50;
 
@@ -91,6 +92,10 @@ iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox
   }
   
   #navphone{
+    -webkit-backface-visibility: hidden;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+
     display: none;
     width: 90%;
     background-color: rgba(36, 36, 33, 0.471);
@@ -101,18 +106,29 @@ iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox
     align-items: center;
     justify-content: space-around; 
     border-radius: 39px;
-    
-    margin: 20px auto 0 auto;
+    margin: 0;
     position: fixed;
-    bottom: 20px;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px)); 
     left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
+    transform: translateX(-50%) translateZ(0);
+    will-change: transform;
+  
 
     a {
       margin-left: 0;
       display: flex;
-
+      & :global(svg) {
+        stroke: #cccccc;
+        fill: none;
+      }
+      &:link,
+      &:visited,
+      &:hover,
+      &:active,
+      &:focus {
+        color: #cccccc;
+        outline: none;
+      }
       svg{
         stroke: #cccccc;
       }
@@ -135,7 +151,7 @@ iconRaw: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox
 </style>
 
 <script>
-document.querySelectorAll('nav a').forEach(anchor => {
+  document.querySelectorAll('nav a').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       const targetAnchor = (e.target as HTMLElement).closest('a');
       const targetId = targetAnchor?.getAttribute('href');
@@ -145,21 +161,27 @@ document.querySelectorAll('nav a').forEach(anchor => {
         const targetElement = document.querySelector(targetId);
 
         if (targetElement) {
-          targetElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+          const header = document.querySelector('.header');
+          const headerHeight = header ? header.getBoundingClientRect().height : 0;
+
+          const elementPosition = targetElement.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.scrollY - headerHeight;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
           });
         }
       }
     });
   });
 
+  // Animación del icono verde
   document.querySelectorAll('#navphone a svg').forEach(target => {
-  target.addEventListener('click', function() {
-    target.classList.remove('temporal-green');
-     void target.getBoundingClientRect();
-    target.classList.add('temporal-green');
+    target.addEventListener('click', function() {
+      target.classList.remove('temporal-green');
+      void target.getBoundingClientRect();
+      target.classList.add('temporal-green');
+    });
   });
-});
-
 </script>
