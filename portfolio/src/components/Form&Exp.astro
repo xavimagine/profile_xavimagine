@@ -1,0 +1,181 @@
+---
+const tituloExp ="Experiencia";
+const tituloForm ="Formación";
+
+const exp = [
+    {
+        puesto:'Becario Desarrollador Full-Stack',
+        empresa:'CRCIT',
+        fecha:'marzo 2026 - junio 2026',
+        actividad :[
+            'Desarrollo de aplicaciones backend con Java y C# (.NET),implementando lógica de negocio y APIs REST.',
+            'Gestión y optimización de bases de datos Oracle con PL/SQL: procedimientos almacenados, triggers y consultas complejas.',
+            'Despliegue y configuración de entornos en Docker y AWS,participando en el ciclo completo de CI/CD.',
+            'Desarrollo frontend complementario  con React.js y Angular para consumo de APIs.'
+        ]
+    },
+    {
+        puesto:'Desarrollador Full-Stack',
+        empresa:'Smartbits',
+        fecha:'abril 2021 - abril 2022',
+        actividad :[
+            'Desarrollo y mantenimiento de aplicaciones web con PHP (Laravel) y JavaScript.',
+            'Integración de bases de datos MySQL en proyectos web.',
+            'Modificaciones y optimización de sitios WordPress para entornos de producción.'
+        ]
+    }
+];
+
+const formacion = [
+    {
+        grado:'Desarrollo  de aplicaciones web',
+        tipo:'Ciclo Formativo Superior',
+        fecha:'2025-2026 ',
+        sitio:'I.E.S Virgen de la Paloma, Madrid'
+    },
+ {
+        grado:'Desarrollo de aplicaciones multiplataforma',
+        tipo:'Ciclo Formativo Superior',
+        fecha:'2024-2026',
+        sitio:'I.E.S Islas Filipinas, Madrid'
+    },
+ {
+        grado:'Diseño y Producción Editorial',
+        tipo:'Ciclo Formativo Superior',
+        fecha:'2011-2013',
+        sitio:'I.E.S La Paloma, Madrid'
+    },
+ {
+        grado:'Preimpresión en Artes Gráficas',
+        tipo:'Ciclo Formativo Medio',
+        fecha:'2008-2010',
+        sitio:'La Salle Sagrado Corazón, Madrid'
+    }];
+
+---
+
+<section>
+    <div>
+        <header class="section-title">
+            <span>04/</span>
+            <h2>{tituloExp}</h2>
+        </header>
+        <div>
+            {exp.map((item) => (
+                <article>
+                    <h2 class="Epigrafe">{item.puesto}</h2>
+                    <span class="Ceja">{item.empresa} {item.fecha}</span>
+                    {item.actividad.map((act) => (
+                        <p class="texto textExp">{act}</p>
+                    ))}
+                </article>
+            ))}
+        </div>
+    </div>
+    <div id="barra"></div>
+    <div>
+        <header class="section-title">
+            <span>05/</span>
+            <h2>{tituloForm}</h2>
+        </header>
+        <div>
+            {formacion.map((item) => (
+                <article>
+                    <h2 class="Epigrafe">{item.grado}</h2>
+                    <span class="Ceja">{item.tipo} {item.fecha}</span>
+                    <p class="texto textForm">{item.sitio}</p>
+                </article>
+            ))}
+        </div>
+    </div>
+</section>
+
+
+<style>
+    section {
+        width: 80%;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem 1rem; 
+    }
+    header{
+        grid-area: header;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: baseline;
+        
+        span {
+            color: #22C55E;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            margin-right: 8px;
+            line-height: 1;
+        }
+
+        h2 {
+            color: #F4F2EC;
+            margin: 0;
+            line-height: 1;
+            font-size: 1.7rem;
+        }
+    }
+    #barra{
+        background-color: #22C55E;
+        width: 356px;
+        height: 2px;
+        margin: 40px 0px 40px 0px;
+    }
+    article{
+        font-family: 'Space Mono', monospace;
+        font-weight: 700;
+        font-style: normal;
+
+        .Epigrafe{
+            color: #22C55E;
+            font-size: 16px;
+            margin: 24px 0px 0px 0px;
+            line-height: 1.2;
+        }
+        .Ceja{
+            color: #F4F2EC;
+            font-size: 11px;
+            display: block;
+            margin-top: -3px;
+        }
+        .texto{
+            color: #9C9A93;
+            font-weight: 400;
+            font-style: italic;
+            font-size: 12px;
+        }
+        #textExp{
+            margin: 0.7rem; 
+        }
+        #textForm{
+            display: block;
+            margin-top: -2px;
+            margin-left: 1px;
+        }
+    }
+    /* TABLET / DESKTOP*/
+  @media (min-width: 768px) {
+        .section-title {
+        font-size: 2rem;
+        margin-bottom: 2.5rem;
+        }
+        #barra{
+            background-color: #22C55E;
+            width: 2px;
+            height: 356px;
+            margin: 40px 0px 40px 0px;
+        }
+        section {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+    }
+    
+</style>

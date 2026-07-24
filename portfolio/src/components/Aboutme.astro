@@ -18,9 +18,9 @@ const fotoPerfil =
 ---
 <section class="about-section" id="sobre-mi">
 <div class="about">
-    <header>
+    <header class="section-title">
         <span>01/</span>
-        <h1>{titulo}</h1>
+        <h2>{titulo}</h2>
     </header>
     <img src={fotoPerfil.src.pc} alt={fotoPerfil.alt} col-span />
     <p>{textAbout}</p>
@@ -68,11 +68,11 @@ const fotoPerfil =
     line-height: 1;
   }
 
-  h1 {
+  h2 {
     color: #F4F2EC;
     margin: 0;
     line-height: 1;
-    font-size: 2.25rem;
+    font-size: 1.7rem;
   }
 
   p {
@@ -101,6 +101,11 @@ const fotoPerfil =
 
   /*  ESCRITORIO */
   @media (min-width: 768px) {
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 2.5rem;
+    }
     section{
           padding: 3rem 6rem;
     }
