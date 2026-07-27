@@ -152,7 +152,9 @@
         #section-mensaje{
             grid-area: mensaje;
         }
-
+        #container section input.input-error {
+            border: 2px solid #ef4444 !important; 
+        }
 }
 </style>
 
@@ -180,8 +182,23 @@
 
     const boton = document.querySelector("#container button") as HTMLButtonElement | null;
     let emailjs: EmailJSModule["default"] | null = null;
+    const inputEmail = document.getElementById("email") as HTMLInputElement | null;
+        if (inputEmail) {
+                inputEmail.addEventListener("input", () => {
+                    const emailValue = limpiarHeader(inputEmail.value);
 
+                    if (emailValue === "") {
+                        inputEmail.classList.remove("input-error");
+                        return;
+                    }
 
+                    if (esEmailValido(emailValue)) {
+                        inputEmail.classList.remove("input-error"); 
+                    } else {
+                        inputEmail.classList.add("input-error");
+                    }
+                });
+            }
     const caja = document.querySelector("#caja");
     if (caja) {
         const observer = new IntersectionObserver(async (entries) => {
