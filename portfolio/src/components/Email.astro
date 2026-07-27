@@ -57,6 +57,7 @@
                 border: none;
                 background-color: #D9D9D9;
                 padding: 0.5rem;
+                color: #242421;
 
 
             }
@@ -77,6 +78,7 @@
         #section-mensaje{
             textarea{
                 height: 200px;
+                color: #242421;
             }
         }
 
@@ -133,11 +135,11 @@
                 }
         }
         }
-         #section-nombre{
+        #section-nombre{
             grid-area: nombre;
             margin-right: 10px;
         }
-         #section-nombre{
+        #section-nombre{
             grid-area: nombre;
 
         }
@@ -150,16 +152,13 @@
         #section-mensaje{
             grid-area: mensaje;
         }
-   
+
 }
 </style>
 
 <script>
-    import emailjs from '@emailjs/browser';
+    type EmailJSModule = typeof import('@emailjs/browser');
 
-    const boton = document.querySelector("#container button") as HTMLButtonElement | null;
-    document.addEventListener("touchstart", () => {}, { passive: true });
-    // Evitar HTML/XSS
     function sanitizarTexto(input: string): string {
         return input
             .replace(/&/g, "&amp;")
@@ -170,7 +169,6 @@
             .replace(/\//g, "&#x2F;");
     }
 
-    // Elimina saltos de línea
     function limpiarHeader(input: string): string {
         return input.replace(/[\r\n]/g, "").trim();
     }
@@ -179,6 +177,23 @@
         const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return regexEmail.test(email);
     }
+
+    const boton = document.querySelector("#container button") as HTMLButtonElement | null;
+    let emailjs: EmailJSModule["default"] | null = null;
+
+
+    const caja = document.querySelector("#caja");
+    if (caja) {
+        const observer = new IntersectionObserver(async (entries) => {
+            if (entries[0].isIntersecting && !emailjs) {
+                const mod = await import('@emailjs/browser');
+                emailjs = mod.default;
+                observer.disconnect();
+            }
+        }, { rootMargin: "200px" }); 
+    }
+
+    document.addEventListener("touchstart", () => {}, { passive: true });
 
     if (boton) {
         boton.addEventListener("click", async () => {
@@ -191,7 +206,6 @@
             const rawAsunto = (document.getElementById("asunto") as HTMLInputElement)?.value || "";
             const rawMensaje = (document.getElementById("mensaje") as HTMLTextAreaElement)?.value || "";
 
-            // --- DESINFECCIÓN Y SANITIZACIÓN ---
             const email = limpiarHeader(rawEmail);
             if (!esEmailValido(email)) {
                 await new Promise(resolve => setTimeout(resolve, 400));
@@ -203,28 +217,26 @@
             const asunto = sanitizarTexto(limpiarHeader(rawAsunto));
             const mensaje = sanitizarTexto(rawMensaje.trim());
 
-            const datosSeguros = { nombre, email, asunto, mensaje };
-
-        
-            const serviceID = 'service_qmyiavi'; 
-            const templateID = 'template_nq59k0o';
-            const publicKey = '0_MBl1VZNn2iZd3Ru';
-
             const templateParams = {
-                from_name: datosSeguros.nombre || "Anónimo",
-                from_email: datosSeguros.email,
-                subject: datosSeguros.asunto || "Sin asunto",
-                message: datosSeguros.mensaje
+                from_name: nombre || "Anónimo",
+                from_email: email,
+                subject: asunto || "Sin asunto",
+                message: mensaje
             };
 
             boton.disabled = true;
             boton.textContent = "ENVIANDO...";
 
             try {
-                await emailjs.send(serviceID, templateID, templateParams, publicKey);
-                
+                if (!emailjs) {
+                    const mod = await import('@emailjs/browser');
+                    emailjs = mod.default;
+                }
+
+                await emailjs.send('service_qmyiavi', 'template_nq59k0o', templateParams, '0_MBl1VZNn2iZd3Ru');
+
                 alert("¡Mensaje enviado con éxito!");
-                
+
                 (document.getElementById("nombre") as HTMLInputElement).value = "";
                 (document.getElementById("email") as HTMLInputElement).value = "";
                 (document.getElementById("asunto") as HTMLInputElement).value = "";
