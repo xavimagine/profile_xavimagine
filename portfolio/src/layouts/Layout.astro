@@ -20,18 +20,22 @@
 
     </head>
     <body>
-<!-- Google tag (gtag.js) -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KHX1QJRYQM"></script>
-<script>
-  // @ts-nocheck
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-KHX1QJRYQM');
+<script
+  is:inline
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-KHX1QJRYQM">
 </script>
 
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+
+  window.gtag = function () {
+    window.dataLayer.push(arguments);
+  };
+
+  window.gtag("js", new Date());
+  window.gtag("config", "G-KHX1QJRYQM");
+</script>
         <slot />
     </body>
 </html>
