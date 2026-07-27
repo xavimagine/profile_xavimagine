@@ -1,0 +1,242 @@
+<div id="caja">
+    <div id="container">
+        <section id="section-nombre">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" placeholder="Nombre y apellidos">
+        </section>
+        <section  id="section-email">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="E-mail">
+        </section>
+        <section id="section-asunto">
+            <label for="asunto">Asunto</label>
+            <input type="text" id="asunto" placeholder="Asunto">
+        </section>
+        <section id="section-mensaje">
+            <label for="mensaje">Mensaje</label>
+            <textarea  id="mensaje" placeholder="Escriba su mensaje....."></textarea>
+        </section>
+        <button>ENVIAR</button>
+    </div>
+</div>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    #caja{
+        background-color: #242421;
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem 2rem;
+        justify-content: center;
+        color: #9C9A93;
+        border-radius: 12px;
+        font-family: 'Inter', sans-serif;
+        font-weight:700;
+    }   
+    #container{
+       
+        section{
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+            textarea{
+                background-color: #D9D9D9;
+                border-radius: 12px;
+                padding: 1rem;
+            }
+            label{
+                margin-bottom: 0.3rem;
+                color:white
+            }
+            input{
+                height: 2rem;
+                border-radius: 6px;
+                border: none;
+                background-color: #D9D9D9;
+                padding: 0.5rem;
+
+
+            }
+            input::placeholder, 
+            textarea::placeholder {
+                color: rgb(84, 83, 83);
+                font-style: italic;
+                opacity: 0.7; 
+            }
+            input:focus, 
+            textarea:focus {
+                outline: none;
+                border: 2px solid #22C55E; 
+                font-style: italic;
+            }
+            
+        }
+        #section-mensaje{
+            textarea{
+                height: 200px;
+            }
+        }
+
+        button{
+            grid-area: boton;
+            border: none;
+            background-color: #22C55E;
+            border-radius: 20px;
+            color: white;
+            height: 40px;
+            font-family: 'Inter', sans-serif;
+            font-weight:700;
+            display: block;        
+            width: 180px;          
+            margin: 1.5rem auto 0;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            
+            &.active-tap {
+                background-color: #F4F2EC;
+                color: #22C55E;
+            }
+            &:active {
+                transform: scale(0.96);
+                background-color: #16a34a;
+            }
+        }
+    }
+    button.active-tap {
+        background-color: #F4F2EC;
+        color: #16a34a;
+    }
+
+    @media (min-width: 768px) {
+        #container{
+            display: grid;
+            box-sizing: border-box;
+            grid-template-columns: repeat(2,auto);
+            grid-template-rows: repeat(2, auto);
+            grid-template-areas:
+            "nombre  email"
+            "asunto asunto"
+            "mensaje mensaje"
+            "boton  boton";
+                button {
+                    background-color: #22C55E;
+                    color: white;
+                    transition: transform 0.3s ease;
+                &:hover {
+                    background-color: #D9D9D9;
+                    color: #22C55E;
+                    transform: scale(1.1);
+                }
+        }
+        }
+         #section-nombre{
+            grid-area: nombre;
+            margin-right: 10px;
+        }
+         #section-nombre{
+            grid-area: nombre;
+
+        }
+        #section-email{
+            grid-area: email;
+        }
+        #section-asunto{
+            grid-area: asunto;
+        }
+        #section-mensaje{
+            grid-area: mensaje;
+        }
+   
+}
+</style>
+
+<script>
+    import emailjs from '@emailjs/browser';
+
+    const boton = document.querySelector("#container button") as HTMLButtonElement | null;
+    document.addEventListener("touchstart", () => {}, { passive: true });
+    // Evitar HTML/XSS
+    function sanitizarTexto(input: string): string {
+        return input
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#x27;")
+            .replace(/\//g, "&#x2F;");
+    }
+
+    // Elimina saltos de línea
+    function limpiarHeader(input: string): string {
+        return input.replace(/[\r\n]/g, "").trim();
+    }
+
+    function esEmailValido(email: string): boolean {
+        const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return regexEmail.test(email);
+    }
+
+    if (boton) {
+        boton.addEventListener("click", async () => {
+            boton.classList.add("active-tap");
+            setTimeout(() => boton.classList.remove("active-tap"), 400);
+            await new Promise(requestAnimationFrame);
+
+            const rawNombre = (document.getElementById("nombre") as HTMLInputElement)?.value || "";
+            const rawEmail = (document.getElementById("email") as HTMLInputElement)?.value || "";
+            const rawAsunto = (document.getElementById("asunto") as HTMLInputElement)?.value || "";
+            const rawMensaje = (document.getElementById("mensaje") as HTMLTextAreaElement)?.value || "";
+
+            // --- DESINFECCIÓN Y SANITIZACIÓN ---
+            const email = limpiarHeader(rawEmail);
+            if (!esEmailValido(email)) {
+                await new Promise(resolve => setTimeout(resolve, 400));
+                alert("Por favor, introduce un correo electrónico válido.");
+                return;
+            }
+
+            const nombre = sanitizarTexto(limpiarHeader(rawNombre));
+            const asunto = sanitizarTexto(limpiarHeader(rawAsunto));
+            const mensaje = sanitizarTexto(rawMensaje.trim());
+
+            const datosSeguros = { nombre, email, asunto, mensaje };
+
+        
+            const serviceID = 'service_qmyiavi'; 
+            const templateID = 'template_nq59k0o';
+            const publicKey = '0_MBl1VZNn2iZd3Ru';
+
+            const templateParams = {
+                from_name: datosSeguros.nombre || "Anónimo",
+                from_email: datosSeguros.email,
+                subject: datosSeguros.asunto || "Sin asunto",
+                message: datosSeguros.mensaje
+            };
+
+            boton.disabled = true;
+            boton.textContent = "ENVIANDO...";
+
+            try {
+                await emailjs.send(serviceID, templateID, templateParams, publicKey);
+                
+                alert("¡Mensaje enviado con éxito!");
+                
+                (document.getElementById("nombre") as HTMLInputElement).value = "";
+                (document.getElementById("email") as HTMLInputElement).value = "";
+                (document.getElementById("asunto") as HTMLInputElement).value = "";
+                (document.getElementById("mensaje") as HTMLTextAreaElement).value = "";
+
+            } catch (error) {
+                console.error("Error al enviar:", error);
+                alert("Hubo un error al enviar el mensaje. Revisa la consola.");
+            } finally {
+                boton.disabled = false;
+                boton.textContent = "ENVIAR";
+            }
+        });
+    }
+</script>
