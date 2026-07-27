@@ -1,33 +1,36 @@
 ---
-const titulo ="Sobre mí";
-const textAbout = " Mi trayectoria en el mundo de la tecnología se nutre de una combinación de lógica y creatividad. Gracias a mi formación tanto en diseño gráfico como en desarrollo full-stack (DAM y DAW), consigo tender un puente entre imágenes impresionantes y un código sólido.Para mí, el desarrollo no consiste solo en hacer que las cosas funcionen, sino en hacerlas memorables. Me apasiona crear interfaces de usuario muy interactivas y llamativas que no solo sean bonitas, sino que también hagan que la experiencia del usuario sea fluida e intuitiva. Me encanta resolver rompecabezas complejos de backend tanto como disfruto con los diseños de frontend con precisión al píxel, asegurándome de que cada aplicación que desarrollo sea potente, escalable y un placer de usar"
+import { getImage } from 'astro:assets';
+
 import desktopImg from '../assets/Fperfil/Pdesktop.png';
 import tabletImg from '../assets/Fperfil/Ptablet.png';
 import phoneImg from '../assets/Fperfil/Pphone.png';
 
-const fotoPerfil =
-    {
-    alt: 'Foto de perfil del portfolio llamado javier diaz rayo',
-    src: { 
-        pc:desktopImg.src,
-        tablet:tabletImg.src,
-        phone:phoneImg.src
-    }
-  }
+const titulo = "Sobre mí";
+const textAbout = "Mi trayectoria en el mundo de la tecnología se nutre de una combinación de lógica y creatividad. Gracias a mi formación tanto en diseño gráfico como en desarrollo full-stack (DAM y DAW), consigo tender un puente entre imágenes impresionantes y un código sólido.Para mí, el desarrollo no consiste solo en hacer que las cosas funcionen, sino en hacerlas memorables. Me apasiona crear interfaces de usuario muy interactivas y llamativas que no solo sean bonitas, sino que también hagan que la experiencia del usuario sea fluida e intuitiva. Me encanta resolver rompecabezas complejos de backend tanto como disfruto con los diseños de frontend con precisión al píxel, asegurándome de que cada aplicación que desarrollo sea potente, escalable y un placer de usar";
 
+const mobileOptimized = await getImage({ src: phoneImg, format: 'webp' });
+const tabletOptimized = await getImage({ src: tabletImg, format: 'webp' });
+const desktopOptimized = await getImage({ src: desktopImg, format: 'webp' });
+
+const altText = "Foto de perfil del portfolio llamado javier diaz rayo";
 ---
-<section class="about-section" id="sobre-mi">
-<div class="about">
-    <header class="section-title">
-        <span>01/</span>
-        <h2>{titulo}</h2>
-    </header>
-    <img src={fotoPerfil.src.pc} alt={fotoPerfil.alt} col-span />
-    <p>{textAbout}</p>
-  
-</div>
-</section>
 
+<section class="about-section" id="sobre-mi">
+  <div class="about">
+    <header class="section-title">
+      <span>01/</span>
+      <h2>{titulo}</h2>
+    </header>
+
+    <picture class="profile-picture">
+      <source media="(min-width: 1024px)" srcset={desktopOptimized.src} />
+      <source media="(min-width: 768px)" srcset={tabletOptimized.src} />
+      <img src={mobileOptimized.src} alt={altText} width={mobileOptimized.attributes.width} height={mobileOptimized.attributes.height} />
+    </picture>
+
+    <p>{textAbout}</p>
+  </div>
+</section>
 
 <style>
   section {
@@ -87,28 +90,35 @@ const fotoPerfil =
     hyphens: auto;
     -webkit-hyphens: auto;
     text-justify: inter-character;
-
   }
 
-  img {
+  /* Estilos para el contenedor de la imagen (<picture> e <img>) */
+  .profile-picture {
     grid-area: img;
+    justify-self: center;
     width: 100%;
     max-width: 194px;
-    height: auto;
-    border-radius: 20px;
-    justify-self: center;
   }
 
-  /*  ESCRITORIO */
-  @media (min-width: 768px) {
+  .profile-picture img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    display: block;
+    object-fit: cover;
+  }
 
+  /* ESCRITORIO */
+  @media (min-width: 768px) {
     .section-title {
       font-size: 2rem;
       margin-bottom: 2.5rem;
     }
-    section{
-          padding: 3rem 6rem;
+
+    section {
+      padding: 3rem 6rem;
     }
+
     .about {
       grid-template-columns: 2fr 1fr;
       grid-template-rows: auto 1fr;
@@ -116,14 +126,13 @@ const fotoPerfil =
         "header img"
         "p      img";
       gap: 2rem;
-      p{
-        font-size: 14px;
-      }
     }
-    h1{
-        text-align: justify;
+
+    .about p {
+      font-size: 14px;
     }
-    img {
+
+    .profile-picture {
       max-width: 208px;
       justify-self: end; 
     }
