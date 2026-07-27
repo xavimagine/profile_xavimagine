@@ -1,0 +1,48 @@
+# Vercel Web Analytics Installation
+
+Successfully installed and configured Vercel Web Analytics for the Astro portfolio project.
+
+## Changes Made
+
+### 1. Package Installation
+- **File Modified**: `package.json`
+- **Action**: Added `@vercel/analytics` version 2.0.1 as a dependency
+- **Command Used**: `pnpm add @vercel/analytics -w`
+
+### 2. Configuration
+- **File Modified**: `src/layouts/Layout.astro`
+- **Changes**:
+  - Added import statement: `import Analytics from '@vercel/analytics/astro';`
+  - Added `<Analytics />` component in the `<head>` section
+
+### 3. Lock File Update
+- **File Modified**: `pnpm-lock.yaml`
+- **Action**: Updated with new dependency tree for @vercel/analytics and its dependencies
+
+## Implementation Details
+
+Following the official Vercel Analytics documentation (fetched from https://vercel.com/docs/analytics/quickstart), I implemented the Astro-specific integration:
+
+1. **Package**: Installed `@vercel/analytics` using pnpm (the project's package manager)
+2. **Integration Method**: Used the Analytics component approach (default export from '@vercel/analytics/astro')
+3. **Placement**: Added the Analytics component in the `<head>` section of the base Layout.astro file, ensuring it's included on all pages
+
+## Build Verification
+
+✅ Build completed successfully with no errors
+✅ All dependencies installed correctly
+✅ No TypeScript or compilation errors
+
+## Next Steps
+
+After deployment to Vercel:
+1. Navigate to the Analytics section in the Vercel project dashboard
+2. Click the "Enable" button to activate Web Analytics
+3. Deploy the changes to production
+4. Analytics data will start appearing in the dashboard after users visit the site
+
+## Files Changed
+
+- `portfolio/package.json` - Added @vercel/analytics dependency
+- `portfolio/pnpm-lock.yaml` - Updated lock file with new dependencies
+- `portfolio/src/layouts/Layout.astro` - Added Analytics import and component
