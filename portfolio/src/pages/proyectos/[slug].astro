@@ -148,14 +148,7 @@ const projectTechs = project.tecnologia.map((techName) => {
 .carousel-track::-webkit-scrollbar {
   display: none;
 }
-.carousel-track img {
-  flex: 0 0 100%;
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  scroll-snap-align: start;
-  pointer-events: none;
-}
+
 .dots {
   position: absolute;
   bottom: 0.75rem;
@@ -222,10 +215,22 @@ const projectTechs = project.tecnologia.map((techName) => {
     color: #9C9A93;
     line-height: 1.6;
   }
+  .carousel-track img {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    scroll-snap-align: start;
+    pointer-events: none;
+  }
  
     @media (min-width: 768px) {
       .project-detail {
-              padding: 5rem 1rem;
+          padding: 5rem 1rem;
+      }
+      .gallery .carousel-track img {
+        height: 534px ;
+        object-fit: contain;
       }
   }
 
