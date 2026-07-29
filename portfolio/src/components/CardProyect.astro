@@ -102,6 +102,7 @@ const projectTechs = project.tecnologia.map((techName) => {
   .carrousel {
     position: relative;
     overflow: hidden;
+    height: 250px;
     border-radius: 10px 10px 0px 0px;
   }
   .carousel-track {
@@ -109,7 +110,8 @@ const projectTechs = project.tecnologia.map((techName) => {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    scrollbar-width: none; 
+    scrollbar-width: none;
+    height: 100%;
   }
   .carousel-track::-webkit-scrollbar {
     display: none; 
@@ -121,6 +123,8 @@ const projectTechs = project.tecnologia.map((techName) => {
     object-fit: cover;
     scroll-snap-align: start;
     pointer-events: none;
+    height: 100%; 
+    object-fit: cover
   }
   .dots {
     position: absolute;
@@ -207,6 +211,42 @@ const projectTechs = project.tecnologia.map((techName) => {
     color: inherit;
   }
 }
+@media (min-width: 768px) {
+    #container {
+    display: flex;
+    flex-direction: row;
+      align-items: stretch;
+    }
+    .carrousel {
+    width: 380px; 
+      height: auto;
+      flex-shrink: 0;
+      border-radius: 10px 0px 0px 10px;
+    }
+    .carousel-track img {
+      height: 100%;
+      min-height: 100%;
+    }
+  }
+  @media (min-width: 768px) {
+    #container {
+      flex-direction: row; 
+      align-items: stretch;
+    }
+    .carrousel {
+      width: 230px; 
+      height: auto; 
+      flex-shrink: 0;
+      border-radius: 10px 0px 0px 10px;
+    }
+    .carousel-track {
+      height: 100%;
+    }
+    .carousel-track img {
+      height: 100%;
+      min-height: 100%;
+    }
+  }
 </style>
 
 <script>
