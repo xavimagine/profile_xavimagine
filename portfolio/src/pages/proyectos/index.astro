@@ -1,0 +1,27 @@
+---
+import Cabecera from '../../components/Cabecera.astro';
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/footer.astro';
+import Pojecttops from '../../components/projectops.astro';
+---
+
+<Layout>
+	<Cabecera />
+		<a href="/" class="atras">← Volver a proyectos</a>
+	<Pojecttops all={true} />
+
+	<Footer />
+</Layout>
+
+<style>
+
+	.atras {
+		width: 100%;
+		max-width: none;
+		color: #22c55e;
+		text-decoration: none;
+		font-weight: 600;
+		display: inline-block;
+		margin: 117px 0px 22px 10%;
+ 	}
+</style>

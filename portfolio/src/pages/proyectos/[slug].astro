@@ -1,0 +1,260 @@
+---
+import Cabecera from '../../components/Cabecera.astro';
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/footer.astro';
+import { skillsData, urlscard } from '../../data/skills';
+import { projects } from '../../data/proyects';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+
+const allSkills = skillsData.flatMap((category) =>
+  category.skills.map((skill) => ({
+    name: skill.name,
+    icon: skill.icon.trim(),
+  }))
+);
+
+const projectLinks = [
+  project.repoUrl ? { url: project.repoUrl, icon: urlscard.github, name: 'Repositorio' } : null,
+  project.demoUrl ? { url: project.demoUrl, icon: urlscard.web, name: 'Demo' } : null,
+].filter(Boolean) as { url: string; icon: string; name: string }[];
+
+const projectTechs = project.tecnologia.map((techName) => {
+  const found = allSkills.find((s) => s.name.toLowerCase() === techName.toLowerCase());
+  return { name: techName, icon: found?.icon ?? null };
+});
+---
+
+<Layout>
+  <Cabecera />
+  <section class="project-detail">
+    <a href="/proyectos" class="volver">← Volver a proyectos</a>
+
+    <h1 set:html={project.titulo}></h1>
+<div class="gallery" data-carousel>
+  <div class="carousel-track">
+    {project.imagen.map((img, index) => (
+      <img src={img} alt={`${project.titulo} - imagen ${index + 1}`} />
+    ))}
+  </div>
+  {project.imagen.length > 1 && (
+    <div class="dots">
+      {project.imagen.map((_, index) => (
+        <button
+          type="button"
+          class={`dot ${index === 0 ? 'active' : ''}`}
+          data-index={index}
+          aria-label={`Ir a imagen ${index + 1}`}
+        ></button>
+      ))}
+    </div>
+  )}
+</div>
+
+    <p class="descripcion" set:html={project.descripcion}></p>
+
+  
+
+    {project.necesidad && (
+      <section class="bloque">
+        <h2>Necesidad</h2>
+        <p>{project.necesidad}</p>
+      </section>
+    )}
+
+    {project.funcion && (
+      <section class="bloque">
+        <h2>Función</h2>
+        <p>{project.funcion}</p>
+      </section>
+    )}
+
+    {project.why && (
+      <section class="bloque">
+        <h2>Por qué este proyecto</h2>
+        <p>{project.why}</p>
+      </section>
+    )}
+ <p>Tecnologías usadas:</p>
+      <div class="tecno">
+      {projectTechs.map((tech) => (
+        <div class="tech-item" title={tech.name}>
+          {tech.icon && <span class="tech-icon" set:html={tech.icon} />}
+        </div>
+      ))}
+    </div>
+      <p>Ver proyecto</p>
+    <div class="tecno">
+    
+      {projectLinks.map((link) => (
+        <a href={link.url} target="_blank" rel="noopener noreferrer" title={link.name} class="tech-link-wrapper">
+          <div class="tech-item">
+            <span class="tech-icon" set:html={link.icon} />
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+  <Footer />
+</Layout>
+
+<style>
+  .project-detail {
+    width: 80%;
+    max-width: 1000px;
+    margin: 100px auto;
+    padding: 2rem 1rem;
+    color: #f4f2ec;
+    font-family: 'Inter Variable', sans-serif;
+    p{
+      text-align: justify;
+      text-justify: inter-character;
+      font-size: 12px;
+    }
+  }
+  .volver {
+    color: #22c55e;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+  .c {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+  }
+.gallery {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+.carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+.carousel-track img {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  scroll-snap-align: start;
+  pointer-events: none;
+}
+.dots {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.4rem;
+  z-index: 2;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.dot.active {
+  background: #22C55E;
+}
+  .descripcion {
+    color: #9C9A93;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .tecno {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+  .tech-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #D9D9D9;
+    border-radius: 100%;
+  }
+  .tech-icon {
+    width: 19px;
+    height: 19px;
+  }
+  .tech-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  .tech-link-wrapper {
+    text-decoration: none;
+  }
+  .bloque {
+    margin-bottom: 1.5rem;
+    white-space: pre-line;
+  }
+  .bloque h2 {
+    color: #22c55e;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  .bloque p {
+    color: #9C9A93;
+    line-height: 1.6;
+  }
+ 
+    @media (min-width: 768px) {
+      .project-detail {
+              padding: 5rem 1rem;
+      }
+  }
+
+</style>
+<script>
+  document.querySelectorAll('[data-carousel]').forEach(card => {
+    const track = card.querySelector('.carousel-track') as HTMLElement;
+    const images = card.querySelectorAll('.carousel-track img');
+    const dots = card.querySelectorAll('.dot');
+
+    if (images.length <= 1 || !track) return;
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const index = Number((dot as HTMLElement).dataset.index);
+        const targetImage = images[index] as HTMLElement;
+        if (targetImage) {
+          track.scrollTo({ left: targetImage.offsetLeft, behavior: 'smooth' });
+        }
+      });
+    });
+
+    let scrollTimeout: number;
+    track.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = window.setTimeout(() => {
+        const index = Math.round(track.scrollLeft / track.clientWidth);
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+      }, 50);
+    });
+  });
+</script>

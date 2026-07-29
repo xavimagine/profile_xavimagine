@@ -1,0 +1,80 @@
+---
+import CardProyect from './CardProyect.astro';
+const titulo = 'Proyecto';
+// Objeto de datos con todas tus habilidades agrupadas
+
+import {projects}from '../data/proyects' 
+interface Props {
+  all?: boolean;
+}
+const { all = false } = Astro.props;
+
+const destacados = all ? projects : projects.filter(p => p.tops).slice(0, 4);
+---
+<section class="section-project" id="proyectos">
+    <header class="section-title">
+        <span>05/</span>
+        <h2>{titulo}</h2>
+      </header>
+      <section class="grid-card">
+        {destacados.map(p => (
+          <div class="cardItem">
+            <CardProyect project={p} />
+          </div>
+        ))}
+      </section>
+   {!all && (
+  <a href="/proyectos" class="ver-mas">Ver más proyectos →</a>
+)}
+</section>
+
+
+<style>
+  
+    header {
+      grid-area: header;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: baseline;
+      margin-bottom: 30px;
+    }
+
+    span {
+      color: #22c55e;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      margin-right: 8px;
+      line-height: 1;
+    }
+
+    h2 {
+      color: #f4f2ec;
+      margin: 0;
+      line-height: 1;
+      font-size: 1.7rem;
+    }
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+  .ver-mas {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 2rem;
+    color: #22c55e;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .section-project {
+    width: 80%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem; 
+  }
+  .cardItem{
+    margin: 40px 0px 40px 0px;
+  }
+</style>

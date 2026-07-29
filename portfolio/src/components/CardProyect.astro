@@ -1,0 +1,244 @@
+---
+import { skillsData,urlscard } from '../data/skills'; 
+
+export interface Project {
+  slug: string;
+  titulo: string;
+  descripcion: string;
+  imagen: string[];
+  tecnologia: string[];
+  tops: boolean;
+  repoUrl?: string;
+  demoUrl?: string;
+}
+interface Props {
+  project: Project;
+}
+const { project } = Astro.props;
+
+const allSkills = skillsData.flatMap((category) =>
+  category.skills.map((skill) => ({
+    name: skill.name,
+    icon: skill.icon.trim(),
+  }))
+);
+const projectLinks: { url: string; icon: string; name: string }[] = [
+  project.repoUrl ? { url: project.repoUrl, icon: urlscard.github, name: "Repositorio" } : null,
+  project.demoUrl ? { url: project.demoUrl, icon: urlscard.web, name: "Demo" } : null,
+].filter(Boolean) as { url: string; icon: string; name: string }[];
+
+const projectTechs = project.tecnologia.map((techName) => {
+  const found = allSkills.find(
+    (s) => s.name.toLowerCase() === techName.toLowerCase()
+  );
+  return {
+    name: techName,
+    icon: found?.icon ?? null,
+  };
+});
+---
+
+<div id="container" data-carousel>
+  <div class="carrousel">
+    <div class="carousel-track">
+      {project.imagen.map((img, index) => (
+        <img src={img} alt={`${project.titulo} - imagen ${index + 1}`} />
+      ))}
+    </div>
+    {project.imagen.length > 1 && (
+      <div class="dots">
+        {project.imagen.map((_, index) => (
+          <button
+            type="button"
+            class={`dot ${index === 0 ? 'active' : ''}`}
+            data-index={index}
+            aria-label={`Ir a imagen ${index + 1}`}
+          ></button>
+        ))}
+      </div>
+    )}
+  </div>
+
+  <div class="card-info">
+    <h4 set:html={project.titulo}></h4>
+    <p set:html={project.descripcion}></p>
+    
+    <section id="sect-skills">
+      <p>Tecnologías</p>
+      <div class="tecno">
+        {projectTechs.map((tech) => (
+          <div class="tech-item" title={tech.name}>
+            <div class="item">{tech.icon && <span class="tech-icon" set:html={tech.icon}/>}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+    <section id="section-url">
+      <p>Ver proyecto</p>
+      <div class="tecno" >
+            {projectLinks.map((link) => (
+                <a href={link.url} target="_blank" rel="noopener noreferrer" title={link.name} class="tech-link-wrapper">
+                  <div class="tech-item">
+                    <div class="item">  
+                      <span class="tech-icon" set:html={link.icon}></span>
+                    </div>  
+                  </div>
+                </a>
+            ))}    
+      </div>
+    </section>
+    <section id="seemore">
+      <a href={`/proyectos/${project.slug}`} class="ver-mas">Ver más →</a>
+    </section>
+  </div>
+</div>
+
+<style>
+  #container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .carrousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px 10px 0px 0px;
+  }
+  .carousel-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none; 
+  }
+  .carousel-track::-webkit-scrollbar {
+    display: none; 
+  }
+  .carousel-track img {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    scroll-snap-align: start;
+    pointer-events: none;
+  }
+  .dots {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.4rem;
+    z-index: 2;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .dot.active {
+    background: #22C55E;
+  }
+  .card-info{
+    padding: 7px 20px 20px 20px;
+    background-color: #242421;
+    font-family: 'Inter Variable', sans-serif;
+    border-radius: 0px 0px 10px 10px ;
+    p{
+      color: #9C9A93;
+      font-size: 11px;
+      line-height: 1.6;
+      font-style: italic;
+    }
+  }
+
+.tecno {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center; 
+  gap: 10px;
+}
+.tech-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer; 
+  width: 30px; 
+  height: 30px;
+  background-color: #D9D9D9;
+  padding: 1px;
+  border-radius: 100%;
+}
+
+.tech-icon {
+  display: inline-flex;
+  width: 19px;  
+  height: 19px;
+}
+
+.tech-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.item{
+  display: flex;
+}
+.tech-link-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  line-height: 0; 
+}
+#sect-skills{
+  margin: 18px 0px 14px 0px;
+}
+#seemore{
+  display: flex;
+  justify-content: flex-end;
+  a{
+    color: #ffff;
+    text-decoration: none;
+    color: inherit;
+  }
+}
+</style>
+
+<script>
+  document.querySelectorAll('[data-carousel]').forEach(card => {
+    const track = card.querySelector('.carousel-track') as HTMLElement;
+    const images = card.querySelectorAll('.carousel-track img');
+    const dots = card.querySelectorAll('.dot');
+
+    if (images.length <= 1 || !track) return;
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const index = Number((dot as HTMLElement).dataset.index);
+        const targetImage = images[index] as HTMLElement;
+        if (targetImage) {
+          track.scrollTo({
+            left: targetImage.offsetLeft,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    let scrollTimeout: number;
+    track.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = window.setTimeout(() => {
+        const index = Math.round(track.scrollLeft / track.clientWidth);
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+      }, 50);
+    });
+  });
+</script>
