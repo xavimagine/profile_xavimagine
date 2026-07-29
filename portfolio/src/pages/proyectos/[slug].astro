@@ -83,7 +83,7 @@ const projectTechs = project.tecnologia.map((techName) => {
       </section>
     )}
  <p>Tecnologías usadas:</p>
-      <div class="tecno">
+      <div class="tecno" id="section-ur">
       {projectTechs.map((tech) => (
         <div class="tech-item" title={tech.name}>
           {tech.icon && <span class="tech-icon" set:html={tech.icon} />}
@@ -91,7 +91,7 @@ const projectTechs = project.tecnologia.map((techName) => {
       ))}
     </div>
       <p>Ver proyecto</p>
-    <div class="tecno">
+    <div class="tecno" id="section-url">
     
       {projectLinks.map((link) => (
         <a href={link.url} target="_blank" rel="noopener noreferrer" title={link.name} class="tech-link-wrapper">
@@ -148,6 +148,8 @@ const projectTechs = project.tecnologia.map((techName) => {
 .carousel-track::-webkit-scrollbar {
   display: none;
 }
+  }
+
 
 .dots {
   position: absolute;
@@ -168,6 +170,7 @@ const projectTechs = project.tecnologia.map((techName) => {
   cursor: pointer;
   transition: background 0.2s ease;
 }
+
 .dot.active {
   background: #22C55E;
 }
@@ -232,8 +235,19 @@ const projectTechs = project.tecnologia.map((techName) => {
         height: 534px ;
         object-fit: contain;
       }
+      
   }
 
+#section-url {
+  .tech-icon {
+    display: inline-flex;
+    width: 27px;  
+    height: 27px;
+  }
+    svg {
+    stroke: #242421 
+  }
+}
 </style>
 <script>
   document.querySelectorAll('[data-carousel]').forEach(card => {
