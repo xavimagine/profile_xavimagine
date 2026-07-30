@@ -16,7 +16,7 @@ export const projects: Project[] = [
         slug: "Stackone",
         titulo: "StackOne",
         descripcion:
-            "StackOne es una plataforma web full-stack orientada a jugadores que necesitan organizar, filtrar y descubrir videojuegos en un mercado saturado. Nace como Trabajo de Fin de Grado del ciclo de Desarrollo de Aplicaciones Web (DAW) y fue calificado con un 10, validando tanto la solidez técnica de la implementación como la justificación de negocio detrás del producto.",
+            "StackOne es una plataforma web full-stack orientada a jugadores que necesitan organizar, filtrar y descubrir videojuegos en un mercado saturado. Nace como Trabajo de Fin de Grado del ciclo de Desarrollo de Aplicaciones Web (DAW) y fue calificado con un 10, validando tanto la solidez técnica de la implementación como la justificación de negocio detrás del producto. A nivel de infraestructura, la web está desplegada en un entorno serverless; debido a esto, los servidores entran en suspensión por inactividad, por lo que la primera carga puede tardar un poco (arranque en frío) o requerir refrescar la página hasta que los servicios se reactiven.",
         imagen: [
             "/assets/Stackone/stackOne.jpg",
             "/assets/Stackone/StackOnedivice.png",
